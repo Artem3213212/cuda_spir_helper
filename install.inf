@@ -1,12 +1,11 @@
 [info]
 title=SPIR Helper
-desc=Some description
+desc=Auto-completion for SPIR lexer
 type=cudatext-plugin
 subdir=cuda_spir_helper
-homepage=
+homepage=https://github.com/Artem3213212/cuda_spir_helper
 
 [item1]
 section=events
 events=on_complete
 lexers=SPIR
-
