@@ -1,11 +1,10 @@
 import json
 
-def LoadJsonDb(FName):
+def load_db(filename):
     db={}
     db_enums={}
-    f=open(FName)
-    json_db=json.loads(f.read())
-    f.close()
+    with open(filename,'r') as f:
+        json_db=json.loads(f.read())
     for i in json_db['instructions']:
         itm=[]
         try:
