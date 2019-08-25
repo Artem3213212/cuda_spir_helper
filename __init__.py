@@ -3,8 +3,7 @@ from cudatext import *
 from .db import *
 
 SPACES = ['\f','\n','\r','\t','\v',' ']
-
-filename_db = os.path.join(os.path.dirname(__file__), 'spirv.core.grammar.json')
+filename_db=os.path.join(os.path.dirname(__file__), 'spirv.core.grammar.json')
 db,db_enums=LoadJsonDb(filename_db)
 
 class Command:
@@ -43,15 +42,11 @@ class Command:
                             to_complete.append('Op|'+i+'|')
                     ed_self.complete('\n'.join(to_complete),len(begin),0)
                     return True
-                if len(tokens)>0:
-                    try:
-                        to_complete=[]
-                        enum_name=db[tokens[0]][len(tokens)-1]
-                        for i in db_enums[enum_name]:
-                            if i.startswith(begin):
-                                to_complete.append(enum_name+'|'+i+'|')
-                        ed_self.complete('\n'.join(to_complete),len(begin),0)
-                        return True
-                    except:
-                        pass
-        
+                if tokens:
+                    to_complete=[]
+                    enum_name=db[tokens[0]][len(tokens)-1]
+                    for i in db_enums[enum_name]:
+                        if i.startswith(begin):
+                            to_complete.append(enum_name+'|'+i+'|')
+                    ed_self.complete('\n'.join(to_complete),len(begin),0)
+                    return True
