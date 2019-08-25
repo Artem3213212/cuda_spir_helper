@@ -39,10 +39,13 @@ class Command:
                     return True
                 if tokens:
                     to_complete=[]
-                    enum_name=db[tokens[0]][len(tokens)-1]
-                    for i in db_enums.get(enum_name,[]):
-                        if i.startswith(begin):
-                            to_complete.append(enum_name+'|'+i+'|')
+                    try:
+                        enum_name=db[tokens[0]][len(tokens)-1]
+                        for i in db_enums[enum_name]:
+                            if i.startswith(begin):
+                                to_complete.append(enum_name+'|'+i+'|')
+                    except:
+                        pass
                     if to_complete:
                         ed_self.complete('\n'.join(to_complete),len(begin),0)
                         return True
