@@ -8,20 +8,14 @@ def load_db():
     db_enums={}
     with open(filename_db,'r') as f:
         json_db=json.loads(f.read())
-    for i in json_db['instructions']:
+    for i in json_db.get('instructions',[]):
         itm=[]
-        try:
-            for i0 in i['operands']:
-                itm.append(i0['kind'])
-        except:
-            pass
+        for i0 in i.get('operands',[]):
+            itm.append(i0['kind'])
         db[i['opname']]=itm
-    for i in json_db['operand_kinds']:
+    for i in json_db.get('operand_kinds',[]):
         itm=[]
-        try:
-            for i0 in i['enumerants']:
-                itm.append(i0['enumerant'])
-        except:
-            pass
+        for i0 in i.get('enumerants',[]):
+            itm.append(i0['enumerant'])
         db_enums[i['kind']]=itm
     return db,db_enums
