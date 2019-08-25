@@ -30,13 +30,14 @@ class Command:
                     return True
                 if len(tokens)>1 and tokens[1]=='=':
                     tokens=tokens[2:]
-                if len(tokens)==0 and(begin.startswith('Op') or begin=='O'):
+                if len(tokens)==0 and (begin.startswith('Op') or begin=='O'):
                     to_complete=[]
                     for i in db.keys():
                         if i.startswith(begin):
                             to_complete.append('Op|'+i+'|')
-                    ed_self.complete('\n'.join(to_complete),len(begin),0)
-                    return True
+                    if to_complete:
+                        ed_self.complete('\n'.join(to_complete),len(begin),0)
+                        return True
                 if tokens:
                     to_complete=[]
                     try:
