@@ -21,7 +21,7 @@ class Command:
             begin=tokens[-1]
             tokens=tokens[:-1]
 
-        if len(begin)>0 and begin[0]=='%':
+        if begin.startswith('%'):
             to_complete=[]
             for i in ed_self.get_text_all().splitlines():
                 t=i.split()
