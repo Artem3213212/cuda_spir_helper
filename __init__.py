@@ -26,8 +26,9 @@ class Command:
                             curr=i.split()[0]
                             if curr.startswith(begin):
                                 to_complete.append('var|'+curr+'|')
-                    ed_self.complete('\n'.join(to_complete),len(begin),0)
-                    return True
+                    if to_complete:
+                        ed_self.complete('\n'.join(to_complete),len(begin),0)
+                        return True
                 if len(tokens)>1 and tokens[1]=='=':
                     tokens=tokens[2:]
                 if len(tokens)==0 and (begin.startswith('Op') or begin=='O'):
