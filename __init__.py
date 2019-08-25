@@ -3,13 +3,9 @@ from cudatext import *
 from .db import *
 
 SPACES = ['\f','\n','\r','\t','\v',' ']
-db,db_enums=load_db()
 
 class Command:
     
-    def config(self):
-        pass
-        
     def on_complete(self,ed_self):
         carets=ed_self.get_carets()
         if len(carets)==1:

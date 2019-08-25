@@ -3,10 +3,10 @@ import json
 
 filename_db=os.path.join(os.path.dirname(__file__), 'spirv.core.grammar.json')
 
-def load_db():
+def load_db(fn):
     db={}
     db_enums={}
-    with open(filename_db,'r') as f:
+    with open(fn,'r') as f:
         json_db=json.loads(f.read())
     for i in json_db.get('instructions',[]):
         itm=[]
@@ -19,3 +19,5 @@ def load_db():
             itm.append(i0['enumerant'])
         db_enums[i['kind']]=itm
     return db,db_enums
+
+db,db_enums=load_db(filename_db)
