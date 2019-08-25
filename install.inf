@@ -1,0 +1,12 @@
+[info]
+title=SPIR Helper
+desc=Some description
+type=cudatext-plugin
+subdir=cuda_spir_helper
+homepage=
+
+[item1]
+section=events
+events=on_complete
+lexers=SPIR
+

@@ -1,0 +1,75 @@
+;*********************************************
+;*Inputs                                     *
+;*********************************************
+;0               Texture coord
+;*********************************************
+;*Constants                                  *
+;*********************************************
+;Configuration
+;1               Use texture
+;2.xyz           if not 1: Color
+;2.w             Opasity
+;3               Texture(if need)
+;*********************************************
+;*Outputs                                    *
+;*********************************************
+;0               Color
+;*********************************************
+OpCapability Shader
+;%111 =OpExtInstImport "GLSL.std.450"
+OpMemoryModel Logical GLSL450
+OpEntryPoint Vertex %4 "main" %9
+OpName %In0 "In0"
+OpName %Const1 "Const1"
+OpName %Const2 "Const2"
+OpName %Out0 "Out0"
+OpName %Bitmap "Bitmap"
+OpDecorate %In0 Location 0
+;OpDecorate %In0 BuiltIn PointCoord
+OpDecorate %Const1 Location 1
+OpDecorate %Const2 Location 2
+OpDecorate %Out0 Location 0
+
+OpDecorate %Bitmap DescriptorSet 0
+;OpDecorate %Bitmap Binding 0
+OpDecorate %Bitmap Location 3
+;type
+%2 = OpTypeVoid
+%3 = OpTypeFunction %2
+%Single = OpTypeFloat 32
+%Boolean = OpTypeBool
+%TAG2DVector = OpTypeVector %Single 2
+%TAG4DVector = OpTypeVector %Single 4
+%PAG2DVectorIn = OpTypePointer Input %TAG2DVector
+%PAG4DVectorOut = OpTypePointer Output %TAG4DVector
+%PAG4DVectorUC = OpTypePointer UniformConstant %TAG4DVector
+%BooleanUC = OpTypePointer UniformConstant %Boolean
+
+%2DImage = OpTypeImage %Single 2D 0 0 0 1 Unknown
+%2DSampledImage = OpTypeSampledImage %2DImage
+%2DSampledImageUC = OpTypePointer UniformConstant %2DSampledImage
+;var
+%In0 = OpVariable %PAG2DVectorIn Input
+%Const1 = OpVariable %BooleanUC UniformConstant
+%Const2 = OpVariable %PAG4DVectorUC UniformConstant
+%Out0 = OpVariable %PAG4DVectorOut Output
+
+%Bitmap = OpVariable %2DSampledImageUC UniformConstant
+;%0 = OpConstant %Single 0
+%1 = OpConstant %Single 1
+%13 = OpConstantComposite %TAG4DVector %1 %1 %1 %1
+%4 = OpFunction %2 None %3
+%5 = OpLabel
+OpBranchConditional %Const1 %DoTexture %DoColor
+%DoTexture = OpLabel
+%In0L = OpLoad %TAG2DVector %In0
+%BitmapL = OpLoad %2DSampledImage %Bitmap
+%30 = OpImageSampleImplicitLod %TAG4DVector %BitmapL %In0L
+;%A = OpLoad %TAG4DVector %Const2
+OpStore %Out0 %30
+OpReturn
+%DoColor = OpLabel
+%Const2L = OpLoad %TAG4DVector %Const2
+OpStore %Out0 %Const2L
+OpReturn
+OpFunctionEnd
