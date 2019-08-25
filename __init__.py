@@ -4,13 +4,11 @@ from .db import *
 
 SPACES = ['\f','\n','\r','\t','\v',' ']
 
-db,db_enums=LoadJsonDb('py\cuda_spir_helper\spirv.core.grammar.json')
+filename_db = os.path.join(os.path.dirname(__file__), 'spirv.core.grammar.json')
+db,db_enums=LoadJsonDb(filename_db)
 
 class Command:
     
-    def __init__(self):
-        pass
-
     def config(self):
         pass
         
