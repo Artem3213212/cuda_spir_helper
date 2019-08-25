@@ -1,8 +1,10 @@
 import os
+import string
 from cudatext import *
 from .db import *
 
 SPACES = ['\f','\n','\r','\t','\v',' ']
+WCHARS = string.ascii_letters + string.digits + '%_'
 
 class Command:
     
@@ -13,13 +15,20 @@ class Command:
         x1,y1,x2,y2=carets[0]
         if y2>=0: return #dont support selection
 
-        curr_line=ed_self.get_text_line(y1)[:x1]
+        line=ed_self.get_text_line(y1)
+        curr_line=line[:x1]
         tokens=curr_line.split()
         if len(curr_line)>0 and curr_line[-1] in SPACES:
             begin=''
         else:
             begin=tokens[-1]
             tokens=tokens[:-1]
+
+        end_len=0
+        x=x1
+        while x<len(line) and line[x] in WCHARS:
+            end_len+=1
+            x+=1
 
         if begin.startswith('%'):
             to_complete=[]
@@ -30,7 +39,7 @@ class Command:
                     if curr.startswith(begin):
                         to_complete.append('var|'+curr+'|')
             if to_complete:
-                ed_self.complete('\n'.join(to_complete),len(begin),0)
+                ed_self.complete('\n'.join(to_complete),len(begin),end_len)
                 return True
 
         if len(tokens)>1 and tokens[1]=='=':
@@ -42,7 +51,7 @@ class Command:
                 if i.startswith(begin):
                     to_complete.append('Op|'+i+'|')
             if to_complete:
-                ed_self.complete('\n'.join(to_complete),len(begin),0)
+                ed_self.complete('\n'.join(to_complete),len(begin),end_len)
                 return True
 
         if tokens:
@@ -55,5 +64,5 @@ class Command:
             except:
                 pass
             if to_complete:
-                ed_self.complete('\n'.join(to_complete),len(begin),0)
+                ed_self.complete('\n'.join(to_complete),len(begin),end_len)
                 return True
