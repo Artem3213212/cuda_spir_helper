@@ -1,9 +1,12 @@
+import os
 import json
 
-def load_db(filename):
+filename_db=os.path.join(os.path.dirname(__file__), 'spirv.core.grammar.json')
+
+def load_db():
     db={}
     db_enums={}
-    with open(filename,'r') as f:
+    with open(filename_db,'r') as f:
         json_db=json.loads(f.read())
     for i in json_db['instructions']:
         itm=[]

@@ -3,8 +3,7 @@ from cudatext import *
 from .db import *
 
 SPACES = ['\f','\n','\r','\t','\v',' ']
-filename_db=os.path.join(os.path.dirname(__file__), 'spirv.core.grammar.json')
-db,db_enums=load_db(filename_db)
+db,db_enums=load_db()
 
 class Command:
     
