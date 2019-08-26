@@ -39,7 +39,7 @@ class Command:
                     if curr.startswith(begin):
                         to_complete.append('var|'+curr+'|')
             if to_complete:
-                ed_self.complete('\n'.join(to_complete),len(begin),end_len)
+                ed_self.complete('\n'.join(sorted(to_complete)),len(begin),end_len)
                 return True
 
         if len(tokens)>1 and tokens[1]=='=':
@@ -51,7 +51,7 @@ class Command:
                 if i.startswith(begin):
                     to_complete.append('Op|'+i+'|')
             if to_complete:
-                ed_self.complete('\n'.join(to_complete),len(begin),end_len)
+                ed_self.complete('\n'.join(sorted(to_complete)),len(begin),end_len)
                 return True
 
         if tokens:
@@ -64,5 +64,5 @@ class Command:
             except:
                 pass
             if to_complete:
-                ed_self.complete('\n'.join(to_complete),len(begin),end_len)
+                ed_self.complete('\n'.join(sorted(to_complete)),len(begin),end_len)
                 return True
